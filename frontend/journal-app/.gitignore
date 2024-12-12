@@ -23,9 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Enviroment variables
+# Environment variables
 .env
 
-# Stuff
-.package.json
-.package-lock.json
+# Ignore package files
+package.json
+package-lock.json
