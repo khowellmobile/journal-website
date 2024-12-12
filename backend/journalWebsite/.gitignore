@@ -5,14 +5,9 @@ __pycache__/
 # Ignore environment configuration files
 *.env
 
-# Ignore local Django settings (can be used for sensitive data)
-journalWebsite/settings_local.py
-
 # Ignore database files (if using SQLite or other local databases)
 db.sqlite3
 
 # Ignore media and static files (can be added to specific project requirements)
 media/
 static/
-
-journalWebsite/settings.py
