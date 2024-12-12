@@ -14,3 +14,5 @@ db.sqlite3
 # Ignore media and static files (can be added to specific project requirements)
 media/
 static/
+
+journalWebsite/settings.py
