@@ -32,18 +32,48 @@ const PostCard = () => {
     );
 };
 
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
+
 const NewPostCard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const titleInputRef = useRef();
     const textAreaInput = useRef();
+    const postLinks = "{}";
+    const isFavorite = false;
 
     const handleCancelClick = () => {
         setIsModalOpen(false);
     };
 
-    const handleSaveClick = () => {
-        console.log(titleInputRef.current.value, textAreaInput.current.value);
+    const handleSaveClick = async() => {
+        const postTitle = titleInputRef.current.value;
+        const postContent = textAreaInput.current.value;
+        const isFavorite = false;  
+        const postLinks = {}; 
+
+        const { data, error } = await supabase
+        .from('Posts') 
+        .insert([
+            {
+                post_title: postTitle,
+                post_text: postContent,
+                is_favorite: isFavorite,
+                post_links: postLinks
+            }
+        ]);
+
+        if (error) {
+            console.error('Error saving post:', error);
+        } else {
+            console.log('Post saved successfully:', data);
+            titleInputRef.current.value = '';
+            textAreaInput.current.value = '';
+
+            alert('Post saved successfully!');
+        }
+
         setIsModalOpen(false);
     };
 
