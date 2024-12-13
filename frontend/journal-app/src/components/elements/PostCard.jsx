@@ -8,10 +8,7 @@ const PostCard = ({ postId, title, date, initialContent }) => {
 
     const handleContentUpdate = async () => {
         if (content !== initialContent) {
-            const { data, error } = await supabase
-                .from("Posts")
-                .update({ post_text: content })
-                .eq("id", postId);
+            const { data, error } = await supabase.from("Posts").update({ post_text: content }).eq("id", postId);
             if (error) {
                 console.error("Error saving post:", error);
             } else {
@@ -63,7 +60,7 @@ const PostCard = ({ postId, title, date, initialContent }) => {
 
 import { supabase } from "../clients/supabaseClient";
 
-const NewPostCard = () => {
+const NewPostCard = ({ addNewPost }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const titleInputRef = useRef();
@@ -79,19 +76,25 @@ const NewPostCard = () => {
         const isFavorite = false;
         const postLinks = {};
 
-        const { data, error } = await supabase.from("Posts").insert([
-            {
-                post_title: postTitle,
-                post_text: postContent,
-                is_favorite: isFavorite,
-                post_links: postLinks,
-            },
-        ]);
+        const { data, error } = await supabase
+            .from("Posts")
+            .insert([
+                {
+                    post_title: postTitle,
+                    post_text: postContent,
+                    is_favorite: isFavorite,
+                    post_links: postLinks,
+                },
+            ])
+            .select();
+
+        addNewPost(data[0]);
 
         if (error) {
             console.error("Error saving post:", error);
         } else {
             console.log("Post saved successfully:", data);
+
             titleInputRef.current.value = "";
             textAreaInput.current.value = "";
 

@@ -24,10 +24,14 @@ const MainFeed = () => {
         fetchPosts();
     }, []);
 
+    const addNewPost = (newPost) => {
+        setLoadedPosts((prevPosts) => [newPost, ...prevPosts]);
+    };
+
     return (
         <div className={classes.feed}>
           <div className={classes.tools}>
-            <NewPostCard />
+            <NewPostCard addNewPost={addNewPost}/>
           </div>
           <div className={classes.posts}>
             {loadedPosts.length > 0 ? (
@@ -36,7 +40,7 @@ const MainFeed = () => {
                   key={post.id}
                   postId={post.id}
                   title={post.post_title}
-                  date={new Date(post.created_at).toLocaleString()} // Format the date to a readable format
+                  date={new Date(post.created_at).toLocaleString()}
                   initialContent={post.post_text}
                 />
               ))
