@@ -34,8 +34,9 @@ const MainFeed = () => {
               loadedPosts.map((post) => (
                 <PostCard
                   key={post.id}
+                  postId={post.id}
                   title={post.post_title}
-                  date={new Date(post.created_at).toLocaleString()}
+                  date={new Date(post.created_at).toLocaleString()} // Format the date to a readable format
                   initialContent={post.post_text}
                 />
               ))

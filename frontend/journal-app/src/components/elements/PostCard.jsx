@@ -2,11 +2,29 @@ import { useRef, useState } from "react";
 
 import classes from "./PostCard.module.css";
 
-const PostCard = ({ title, date, initialContent }) => {
+const PostCard = ({ postId, title, date, initialContent }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [content, setContent] = useState(initialContent);
 
+    const handleContentUpdate = async () => {
+        if (content !== initialContent) {
+            const { data, error } = await supabase
+                .from("Posts")
+                .update({ post_text: content })
+                .eq("id", postId);
+            if (error) {
+                console.error("Error saving post:", error);
+            } else {
+                console.log("Post updated successfully:", data);
+            }
+        }
+    };
+
     const handleEditClick = () => {
+        if (isEditing) {
+            handleContentUpdate();
+        }
+
         setIsEditing(!isEditing);
     };
 
