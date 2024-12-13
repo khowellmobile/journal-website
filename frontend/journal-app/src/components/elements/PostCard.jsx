@@ -2,19 +2,24 @@ import { useRef, useState } from "react";
 
 import classes from "./PostCard.module.css";
 
-const PostCard = () => {
+const PostCard = ({ title, date, initialContent }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [content, setContent] = useState(initialContent);
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
+    };
+
+    const handleContentChange = (event) => {
+        setContent(event.target.value);
     };
 
     return (
         <div className={classes.card}>
             <div className={classes.header}>
                 <div className={classes.headerText}>
-                    <h3>Working on website</h3>
-                    <p>Date: 12/11/2024 @ 10:59am</p>
+                    <h3>{title}</h3>
+                    <p>Date: {date}</p>
                 </div>
                 <div className={classes.headerTools}>
                     <div className={classes.tool} onClick={handleEditClick}>
@@ -26,52 +31,53 @@ const PostCard = () => {
                 </div>
             </div>
             <div className={classes.content}>
-                <textarea readOnly={!isEditing} className={classes.textarea} placeholder="Type here..."></textarea>
+                <textarea
+                    readOnly={!isEditing}
+                    className={classes.textarea}
+                    placeholder="Type here..."
+                    value={content}
+                    onChange={handleContentChange}
+                ></textarea>
             </div>
         </div>
     );
 };
 
-import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
+import { supabase } from "../clients/supabaseClient";
 
 const NewPostCard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const titleInputRef = useRef();
     const textAreaInput = useRef();
-    const postLinks = "{}";
-    const isFavorite = false;
 
     const handleCancelClick = () => {
         setIsModalOpen(false);
     };
 
-    const handleSaveClick = async() => {
+    const handleSaveClick = async () => {
         const postTitle = titleInputRef.current.value;
         const postContent = textAreaInput.current.value;
-        const isFavorite = false;  
-        const postLinks = {}; 
+        const isFavorite = false;
+        const postLinks = {};
 
-        const { data, error } = await supabase
-        .from('Posts') 
-        .insert([
+        const { data, error } = await supabase.from("Posts").insert([
             {
                 post_title: postTitle,
                 post_text: postContent,
                 is_favorite: isFavorite,
-                post_links: postLinks
-            }
+                post_links: postLinks,
+            },
         ]);
 
         if (error) {
-            console.error('Error saving post:', error);
+            console.error("Error saving post:", error);
         } else {
-            console.log('Post saved successfully:', data);
-            titleInputRef.current.value = '';
-            textAreaInput.current.value = '';
+            console.log("Post saved successfully:", data);
+            titleInputRef.current.value = "";
+            textAreaInput.current.value = "";
 
-            alert('Post saved successfully!');
+            alert("Post saved successfully!");
         }
 
         setIsModalOpen(false);
