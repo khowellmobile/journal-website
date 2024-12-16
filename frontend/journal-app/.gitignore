@@ -25,7 +25,3 @@ dist-ssr
 
 # Environment variables
 .env
-
-# Ignore package files
-package.json
-package-lock.json
