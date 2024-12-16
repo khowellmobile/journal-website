@@ -4,14 +4,18 @@ import MenuNav from "../components/sections/MenuNav";
 
 import { SeparatorV } from "../components/elements/Separators";
 
-import classes from "./HomePage.module.css"
+import classes from "./AdminPage.module.css"
 
-const HomePage = () => {
+const AdminPage = () => {
     return (
         <div className={classes.contentContainer}>
+            <MenuNav />
+            <SeparatorV />
             <MainFeed />
+            <SeparatorV />
+            <LinksNav />
         </div>
     );
 }
 
-export default HomePage;
+export default AdminPage;
