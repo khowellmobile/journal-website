@@ -4,9 +4,20 @@ import { supabase } from "../clients/supabaseClient";
 import classes from "./MainFeed.module.css";
 
 const MainFeed = () => {
+    const [user, setUser] = useState(null);
     const [loadedPosts, setLoadedPosts] = useState([]);
 
     useEffect(() => {
+        const checkUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            if (user) {
+                setUser(user);
+            }
+        };
+        checkUser();
+
         const fetchPosts = async () => {
             try {
                 const { data, error } = await supabase.from("Posts").select();
@@ -30,26 +41,26 @@ const MainFeed = () => {
 
     return (
         <div className={classes.feed}>
-          <div className={classes.tools}>
-            <NewPostCard addNewPost={addNewPost}/>
-          </div>
-          <div className={classes.posts}>
-            {loadedPosts.length > 0 ? (
-              loadedPosts.map((post) => (
-                <PostCard
-                  key={post.id}
-                  postId={post.id}
-                  title={post.post_title}
-                  date={new Date(post.created_at).toLocaleString()}
-                  initialContent={post.post_text}
-                />
-              ))
-            ) : (
-              <p>No posts available</p>
-            )}
-          </div>
+            <div className={classes.tools}>
+                { user && <NewPostCard addNewPost={addNewPost} />}
+            </div>
+            <div className={classes.posts}>
+                {loadedPosts.length > 0 ? (
+                    loadedPosts.map((post) => (
+                        <PostCard
+                            key={post.id}
+                            postId={post.id}
+                            title={post.post_title}
+                            date={new Date(post.created_at).toLocaleString()}
+                            initialContent={post.post_text}
+                        />
+                    ))
+                ) : (
+                    <p>No posts available</p>
+                )}
+            </div>
         </div>
-      );
+    );
 };
 
 export default MainFeed;
