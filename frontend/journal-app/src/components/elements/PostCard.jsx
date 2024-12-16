@@ -1,10 +1,24 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { supabase } from "../clients/supabaseClient";
 
 import classes from "./PostCard.module.css";
 
 const PostCard = ({ postId, title, date, initialContent }) => {
+    const [user, setUser] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [content, setContent] = useState(initialContent);
+
+    useEffect(() => {
+        const checkUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            if (user) {
+                setUser(user);
+            }
+        };
+        checkUser();
+    }, []);
 
     const handleContentUpdate = async () => {
         if (content !== initialContent) {
@@ -36,14 +50,17 @@ const PostCard = ({ postId, title, date, initialContent }) => {
                     <h3>{title}</h3>
                     <p>Date: {date}</p>
                 </div>
-                <div className={classes.headerTools}>
-                    <div className={classes.tool} onClick={handleEditClick}>
-                        {isEditing ? <p>✔</p> : <p>Edit</p>}
+                {/* Conditional rendering of tools */}
+                {user && (
+                    <div className={classes.headerTools}>
+                        <div className={classes.tool} onClick={handleEditClick}>
+                            {isEditing ? <p>✔</p> : <p>Edit</p>}
+                        </div>
+                        <div className={classes.tool}>
+                            <p>x</p>
+                        </div>
                     </div>
-                    <div className={classes.tool}>
-                        <p>x</p>
-                    </div>
-                </div>
+                )}
             </div>
             <div className={classes.content}>
                 <textarea
@@ -57,8 +74,6 @@ const PostCard = ({ postId, title, date, initialContent }) => {
         </div>
     );
 };
-
-import { supabase } from "../clients/supabaseClient";
 
 const NewPostCard = ({ addNewPost }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,19 +1,13 @@
-import LinksNav from "../components/sections/LinksNav";
+import LoginCard from "../components/elements/LoginCard";
 import MainFeed from "../components/sections/MainFeed";
-import MenuNav from "../components/sections/MenuNav";
-
-import { SeparatorV } from "../components/elements/Separators";
 
 import classes from "./HomePage.module.css"
 
 const HomePage = () => {
     return (
         <div className={classes.contentContainer}>
-            <MenuNav />
-            <SeparatorV />
+            <LoginCard />
             <MainFeed />
-            <SeparatorV />
-            <LinksNav />
         </div>
     );
 }
