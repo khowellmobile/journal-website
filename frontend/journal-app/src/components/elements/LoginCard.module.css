@@ -1,57 +1,134 @@
 .loginCard {
-    width: 40%;
-    height: 25rem;
-    padding: 0rem 1rem 1rem 1rem;
+    width: 27rem;
+    height: 27rem;
+    padding: 1.5rem 0.75rem;
+    box-sizing: border-box;
 
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
+    background-color: white;
+    border-radius: 1rem;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+
+    background: linear-gradient(-45deg, #012622, #2f4064, #012622, #52a765);
+    background-size: 400% 400%;
+    animation: gradient 45s linear infinite;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo > b {
+    margin: 0px;
+
+    color: white;
+    font-size: 1.7rem;
+}
+
+.loginHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
-.loginCard input {
+.loginHeader > b {
+    font-size: 1.5rem;
+}
+
+.loginHeader > p {
+    margin-top: 0.2rem;
+
+    font-size: 0.8rem;
+}
+
+.submitButton {
+    width: 80%;
     height: 2rem;
+    margin-top: 1rem;
+    background: linear-gradient(-45deg, #012622, #2f4064, #012622, #52a765);
+    background-size: 400% 400%;
+    animation: gradient 45s linear infinite;
+    color: white;
+    font-size: 1rem;
+    font-family: "poppins", "sans-serif";
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all ease-out 0.2s;
+}
+
+.submitButton:hover {
+    transform: translateY(-1px);
+}
+
+.submitButton:active {
+    transform: translateY(1px);
+}
+
+.formCluster {
+    width: 80%;
+    height: 2.8rem;
+    margin-bottom: 1rem;
+
+    border-bottom: 2px solid rgb(114, 114, 134);
+
+    display: inline-block;
+}
+
+.formCluster > p {
+    margin: 0px;
+
+    font-size: 0.8rem;
+    transition: all ease-out 0.2s;
+
+    position: relative;
+    top: -0.4rem;
+    z-index: 0;
+}
+
+.formCluster > input {
     width: 90%;
 
     background-color: rgb(0, 0, 0, 0);
-    color: var(--tertiary-color);
-    font-family: "poppins", "sans-serif";
-    font-size: 1.16rem;
-    font-weight: 300;
+    font-size: 0.9rem;
     outline: none;
     border: none;
-    border-bottom: 1px solid var(--tertiary-color);
+
+    position: relative;
+    top: 1.2rem;
+    right: 1px;
+
+    z-index: 1000;
 }
 
-.loginCard button {
-    width: 10rem;
-    height: 1.5rem;
-    margin-left: 0.5rem;
-    padding: 0rem 2rem;
-
-    background-color: var(--secondary-color);
-    color: var(--tertiary-color);
-    font-family: "poppins", "sans-serif";
-    border-radius: 0.25rem;
-    border: 1px solid var(--tertiary-color);
-    outline: none;
-    cursor: pointer;
+.formCluster > input::placeholder {
+    color: rgb(0, 0, 0, 0);
 }
 
-.openModalButton {
-    height: 3rem;
-    padding: 0.25rem 1.5rem;
+.formInput:focus + .formLabel {
+    color: #319747;
+}
 
-    color: var(--tertiary-color);
-    background-color: var(--primary-color);
-    font-family: "poppins", "sans-serif";
-    outline: none;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
+.formInput:not(:placeholder-shown) + .formLabel,
+.formInput:focus + .formLabel {
+    -webkit-transform: translateY(-1rem);
+    transform: translateY(-1rem);
+}
+
+.formLabel {
+    position: relative;
+    right: 1px;
 }
 
 .modalOverlay {
@@ -65,4 +142,16 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
