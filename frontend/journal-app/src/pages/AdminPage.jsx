@@ -27,7 +27,6 @@ const AdminPage = () => {
 
     return (
         <div className={classes.contentContainer}>
-            <h2>Admin</h2>
             <MainFeed />
         </div>
     );
