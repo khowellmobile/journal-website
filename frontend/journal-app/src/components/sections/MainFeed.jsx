@@ -5,6 +5,7 @@ import classes from "./MainFeed.module.css";
 
 const MainFeed = () => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [loadedPosts, setLoadedPosts] = useState([]);
 
     useEffect(() => {
@@ -17,8 +18,11 @@ const MainFeed = () => {
             }
         };
         checkUser();
+    }, []);
 
+    useEffect(() => {
         const fetchPosts = async () => {
+            setIsLoading(true);
             try {
                 const { data, error } = await supabase.from("Posts").select();
 
@@ -30,6 +34,8 @@ const MainFeed = () => {
                 }
             } catch (error) {
                 console.error("Error fetching posts:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchPosts();
@@ -39,11 +45,17 @@ const MainFeed = () => {
         setLoadedPosts((prevPosts) => [newPost, ...prevPosts]);
     };
 
+    if (isLoading) {
+        return (
+            <section className={classes.loading}>
+                <p>Loading...</p>
+            </section>
+        );
+    }
+
     return (
         <div className={classes.feed}>
-            <div className={classes.tools}>
-                { user && <NewPostCard addNewPost={addNewPost} />}
-            </div>
+            <div className={classes.tools}>{user && <NewPostCard addNewPost={addNewPost} />}</div>
             <div className={classes.posts}>
                 {loadedPosts.length > 0 ? (
                     loadedPosts.map((post) => (
