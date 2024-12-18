@@ -44,7 +44,7 @@ const PostCard = ({ postId, title, date, initialContent }) => {
     };
 
     return (
-        <div className={classes.card}>
+        <div className={classes.postCard}>
             <div className={classes.header}>
                 <div className={classes.headerText}>
                     <h3>{title}</h3>
@@ -56,9 +56,7 @@ const PostCard = ({ postId, title, date, initialContent }) => {
                         <div className={classes.tool} onClick={handleEditClick}>
                             {isEditing ? <p>✔</p> : <p>Edit</p>}
                         </div>
-                        <div className={classes.tool}>
-                            <p>x</p>
-                        </div>
+                        <DeletePostCard />
                     </div>
                 )}
             </div>
@@ -130,9 +128,7 @@ const NewPostCard = ({ addNewPost }) => {
                 <div className={classes.modalOverlay}>
                     <form className={classes.newCard}>
                         <div className={classes.newHeader}>
-                            <div className={classes.newHeaderInput}>
-                                <input type="text" placeholder="Title" ref={titleInputRef} />
-                            </div>
+                            <input type="text" placeholder="Title" ref={titleInputRef} />
                             <div className={classes.newHeaderTools}>
                                 <button type="button" className={classes.postButton} onClick={handleCancelClick}>
                                     Cancel
@@ -142,14 +138,45 @@ const NewPostCard = ({ addNewPost }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className={classes.textareaContainer}>
-                            <textarea
-                                className={classes.newTextarea}
-                                placeholder="Type here..."
-                                ref={textAreaInput}
-                            ></textarea>
-                        </div>
+                        <textarea
+                            className={classes.newTextarea}
+                            placeholder="Type here..."
+                            ref={textAreaInput}
+                        ></textarea>
                     </form>
+                </div>
+            )}
+        </>
+    );
+};
+
+const DeletePostCard = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleCancelDeleteClick = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleConfirmDeleteClick = () => {
+        setIsModalOpen(false);
+    };
+
+    return (
+        <>
+            <p onClick={() => setIsModalOpen(true)} className={classes.tool}>
+                x
+            </p>
+
+            {/* Conditional logic to control overlay. Right side wont eval if left side false */}
+            {isModalOpen && (
+                <div className={classes.modalOverlay}>
+                    <div className={classes.deleteCard}>
+                        <p>Are you sure?</p>
+                        <div>
+                            <button onClick={handleCancelDeleteClick}>Cancel</button>
+                            <button onClick={handleConfirmDeleteClick}>Delete</button>
+                        </div>
+                    </div>
                 </div>
             )}
         </>
