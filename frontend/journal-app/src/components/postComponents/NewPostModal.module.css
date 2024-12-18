@@ -1,0 +1,99 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.openModalButton {
+    padding: 0.25rem 1.5rem;
+
+    color: var(--tertiary-color);
+    background-color: var(--primary-color);
+    font-family: "poppins", "sans-serif";
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.newCard {
+    width: 40%;
+    height: 25rem;
+    padding: 0rem 1rem 1rem 1rem;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.newHeader {
+    width: 100%;
+    height: 15%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleInput {
+    height: 2rem;
+    width: 70%;
+
+    background-color: rgb(0, 0, 0, 0);
+    color: var(--tertiary-color);
+    font-family: "poppins", "sans-serif";
+    font-size: 1.16rem;
+    font-weight: 300;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--tertiary-color);
+}
+
+.titleInput::placeholder {
+    color: rgb(170, 170, 170);
+}
+
+.newHeaderTools {
+    width: 30%;
+
+    display: flex;
+    justify-content: end;
+}
+
+.newTextarea {
+    width: 100%;
+    height: 85%;
+    padding: 0.5rem;
+
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+
+    resize: none;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--tertiary-color);
+    font-family: "poppins", "sans-serif";
+    border-radius: 0.25rem;
+    border: 1px solid var(--tertiary-color);
+    outline: none;
+    cursor: pointer;
+}
+
+.newHeaderTools button {
+    height: 1.5rem;
+    margin-left: 0.5rem;
+    padding: 0rem 1rem;
+}
