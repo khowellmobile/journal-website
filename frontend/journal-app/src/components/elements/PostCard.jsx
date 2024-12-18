@@ -155,7 +155,6 @@ const DeletePostCard = ({ postId, removePost }) => {
 
     const handleCancelDeleteClick = () => {
         setIsModalOpen(false);
-        console.log(postId);
     };
 
     const handleConfirmDeleteClick = async () => {

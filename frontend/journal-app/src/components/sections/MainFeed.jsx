@@ -29,7 +29,6 @@ const MainFeed = () => {
                 if (error) {
                     console.error("Error fetching posts:", error);
                 } else {
-                    console.log("Posts fetched successfully:", data);
                     setLoadedPosts(data);
                 }
             } catch (error) {
