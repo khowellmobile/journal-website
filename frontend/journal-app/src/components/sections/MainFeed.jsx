@@ -29,7 +29,6 @@ const MainFeed = () => {
                 if (error) {
                     console.error("Error fetching posts:", error);
                 } else {
-                    console.log("Posts fetched successfully:", data);
                     setLoadedPosts(data);
                 }
             } catch (error) {
@@ -45,6 +44,10 @@ const MainFeed = () => {
         setLoadedPosts((prevPosts) => [newPost, ...prevPosts]);
     };
 
+    const removePost = (postId) => {
+        setLoadedPosts((prevPosts) => prevPosts.filter(post => post.id !== postId));
+    };
+
     if (isLoading) {
         return (
             <section className={classes.loading}>
@@ -55,7 +58,7 @@ const MainFeed = () => {
 
     return (
         <div className={classes.feed}>
-            <div className={classes.tools}>{user && <NewPostCard addNewPost={addNewPost} />}</div>
+            <div className={classes.tools}>{user && <NewPostCard addNewPost={addNewPost}/>}</div>
             <div className={classes.posts}>
                 {loadedPosts.length > 0 ? (
                     loadedPosts.map((post) => (
@@ -65,6 +68,7 @@ const MainFeed = () => {
                             title={post.post_title}
                             date={new Date(post.created_at).toLocaleString()}
                             initialContent={post.post_text}
+                            removePost={removePost}
                         />
                     ))
                 ) : (
