@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { NewPostCard, PostCard } from "../elements/PostCard";
+
 import { supabase } from "../clients/supabaseClient";
+import PostCard from "../postComponents/PostCard";
+import NewPostModal from "../postComponents/NewPostModal";
+
 import classes from "./MainFeed.module.css";
 
 const MainFeed = () => {
@@ -45,7 +48,7 @@ const MainFeed = () => {
     };
 
     const removePost = (postId) => {
-        setLoadedPosts((prevPosts) => prevPosts.filter(post => post.id !== postId));
+        setLoadedPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     };
 
     if (isLoading) {
@@ -58,7 +61,7 @@ const MainFeed = () => {
 
     return (
         <div className={classes.feed}>
-            <div className={classes.tools}>{user && <NewPostCard addNewPost={addNewPost}/>}</div>
+            <div className={classes.tools}>{user && <NewPostModal addNewPost={addNewPost} />}</div>
             <div className={classes.posts}>
                 {loadedPosts.length > 0 ? (
                     loadedPosts.map((post) => (
