@@ -3,7 +3,7 @@ import { supabase } from "../clients/supabaseClient";
 
 import classes from "./PostCard.module.css";
 
-const PostCard = ({ postId, title, date, initialContent }) => {
+const PostCard = ({ postId, title, date, initialContent, removePost }) => {
     const [user, setUser] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [content, setContent] = useState(initialContent);
@@ -56,7 +56,7 @@ const PostCard = ({ postId, title, date, initialContent }) => {
                         <div className={classes.tool} onClick={handleEditClick}>
                             {isEditing ? <p>✔</p> : <p>Edit</p>}
                         </div>
-                        <DeletePostCard />
+                        <DeletePostCard postId={postId} removePost={removePost} />
                     </div>
                 )}
             </div>
@@ -128,7 +128,7 @@ const NewPostCard = ({ addNewPost }) => {
                 <div className={classes.modalOverlay}>
                     <form className={classes.newCard}>
                         <div className={classes.newHeader}>
-                            <input type="text" placeholder="Title" ref={titleInputRef} />
+                            <input type="text" className={classes.titleInput} placeholder="Title" ref={titleInputRef} />
                             <div className={classes.newHeaderTools}>
                                 <button type="button" className={classes.postButton} onClick={handleCancelClick}>
                                     Cancel
@@ -150,14 +150,23 @@ const NewPostCard = ({ addNewPost }) => {
     );
 };
 
-const DeletePostCard = () => {
+const DeletePostCard = ({ postId, removePost }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCancelDeleteClick = () => {
         setIsModalOpen(false);
+        console.log(postId);
     };
 
-    const handleConfirmDeleteClick = () => {
+    const handleConfirmDeleteClick = async () => {
+        const { data, error } = await supabase.from("Posts").delete().eq("id", postId);
+
+        if (error) {
+            console.error("Error deleting post:", error);
+        } else {
+            removePost(postId);
+        }
+
         setIsModalOpen(false);
     };
 
