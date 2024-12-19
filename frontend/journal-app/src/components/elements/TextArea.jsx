@@ -5,12 +5,7 @@ import classes from "./TextArea.module.css";
 const TextArea = () => {
     return (
         <div>
-            <textarea
-                type="text"
-                className={classes.textarea}
-                spellcheck="false"
-                placeholder="Type here"
-            ></textarea>
+            <textarea type="text" className={classes.textarea} spellcheck="false" placeholder="Type here"></textarea>
         </div>
     );
 };
