@@ -2,8 +2,6 @@
     width: 100vw;
     max-width: 100vw;
 
-    background-color: rgb(250, 250, 250);
-
     display: flex;
     justify-content: space-between;
 }

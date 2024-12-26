@@ -34,7 +34,6 @@
 
 button {
     background-color: var(--secondary-color);
-    color: var(--tertiary-color);
     font-family: "poppins", "sans-serif";
     border-radius: 0.25rem;
     border: 1px solid var(--tertiary-color);
@@ -51,6 +50,8 @@ button {
     height: 1rem;
     margin-left: 0.5rem;
 
-    color: var(--tertiary-color);
+    font-size: 1rem;
+    line-height: 1rem;
+    text-align: center;
     cursor: pointer;
 }

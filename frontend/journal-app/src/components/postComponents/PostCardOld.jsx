@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-import Tag from "../elements/Tag";
-import DeletePostModal from "./DeletePostModal";
 import { supabase } from "../clients/supabaseClient";
+import DeletePostModal from "./DeletePostModal";
 
 import classes from "./PostCard.module.css";
 
-const PostCard = ({ postId, title, date, initialContent, removePost, postTagsList = null }) => {
+const PostCard = ({ postId, title, date, initialContent, removePost }) => {
     const [user, setUser] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [content, setContent] = useState(initialContent);
-    const [postTags, setPostTags] = useState(postTagsList);
 
     useEffect(() => {
         const checkUser = async () => {
@@ -47,17 +45,12 @@ const PostCard = ({ postId, title, date, initialContent, removePost, postTagsLis
         setContent(event.target.value);
     };
 
-    const resizeTextarea = (textarea) => {
-        textarea.style.height = "auto";
-        textarea.style.height = `${textarea.scrollHeight}px`;
-    };
-
     return (
         <div className={classes.postCard}>
             <div className={classes.header}>
                 <div className={classes.headerText}>
                     <h3>{title}</h3>
-                    <p>{date}</p>
+                    <p>Date: {date}</p>
                 </div>
                 {/* Conditional rendering of tools */}
                 {user && (
@@ -69,7 +62,6 @@ const PostCard = ({ postId, title, date, initialContent, removePost, postTagsLis
                     </div>
                 )}
             </div>
-            <div className={classes.separatorH}></div>
             <div className={classes.content}>
                 <textarea
                     readOnly={!isEditing}
@@ -77,14 +69,7 @@ const PostCard = ({ postId, title, date, initialContent, removePost, postTagsLis
                     placeholder="Type here..."
                     value={content}
                     onChange={handleContentChange}
-                    onInput={(e) => resizeTextarea(e.target)}
                 ></textarea>
-            </div>
-            <div className={classes.separatorH}></div>
-            <div className={classes.tags}>
-                {postTags.map((tag) => (
-                    <Tag key={tag} tagName={tag} lockInitialState={true} />
-                ))}
             </div>
         </div>
     );
