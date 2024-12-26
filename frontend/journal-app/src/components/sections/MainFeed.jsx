@@ -55,12 +55,18 @@ const MainFeed = () => {
     };
 
     const addTag = (tagName) => {
-        setTagList((prevTags) => [tagName, ...prevTags]);
+        setTagList((prevTags) => [...prevTags, tagName]);
     };
 
     const removeTag = (tagName) => {
         setTagList((prevTags) => prevTags.filter((tag) => tag !== tagName));
     };
+
+    const filteredPosts = tagList.length > 0
+        ? loadedPosts.filter((post) =>
+              post.post_links.tags.some((tag) => tagList.includes(tag))
+          )
+        : loadedPosts;
 
     if (isLoading) {
         return (
@@ -97,8 +103,8 @@ const MainFeed = () => {
                 <Tag tagName="vscode" isMono={isTagMono} addTag={addTag} removeTag={removeTag} />
             </div>
             <div className={classes.posts}>
-                {loadedPosts.length > 0 ? (
-                    loadedPosts.map((post) => (
+                {filteredPosts.length > 0 ? (
+                    filteredPosts.map((post) => (
                         <PostCard
                             key={post.id}
                             postId={post.id}
