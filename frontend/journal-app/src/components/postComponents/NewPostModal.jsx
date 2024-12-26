@@ -54,8 +54,6 @@ const NewPostModal = ({ addNewPost }) => {
 
             titleInputRef.current.value = "";
             textAreaInput.current.value = "";
-
-            alert("Post saved successfully!");
         }
 
         setIsModalOpen(false);
