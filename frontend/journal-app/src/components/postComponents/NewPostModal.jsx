@@ -82,11 +82,13 @@ const NewPostModal = ({ addNewPost }) => {
                                 </button>
                             </div>
                         </div>
+                        <div className={classes.separatorH}></div>
                         <textarea
                             className={classes.newTextarea}
                             placeholder="Type here..."
                             ref={textAreaInput}
                         ></textarea>
+                        <div className={classes.separatorH}></div>
                         <div className={classes.allTags}>
                             <Tag tagName="ai" isMono={true} addTag={addTag} removeTag={removeTag} />
                             <Tag tagName="css" isMono={true} addTag={addTag} removeTag={removeTag} />
