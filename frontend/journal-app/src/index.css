@@ -4,9 +4,6 @@
     --primary-color: #012622;
     --secondary-color: #003b36;
     --tertiary-color: white;
-
-    --tinker-background-color: white;
-    --tinker-background-shadow-color: rgb(15, 15, 15);
 }
 
 html {
@@ -16,6 +13,15 @@ html {
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+
+    background-color: rgb(250, 250, 250);
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 code {

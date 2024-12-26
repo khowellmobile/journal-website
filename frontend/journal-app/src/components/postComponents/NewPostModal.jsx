@@ -1,14 +1,24 @@
 import { useState, useRef } from "react";
 
 import { supabase } from "../clients/supabaseClient";
+import Tag from "../elements/Tag";
 
 import classes from "./NewPostModal.module.css";
 
 const NewPostModal = ({ addNewPost }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tagList, setTagList] = useState([]);
 
     const titleInputRef = useRef();
     const textAreaInput = useRef();
+
+    const addTag = (tagName) => {
+        setTagList((prevTags) => [tagName, ...prevTags]);
+    };
+
+    const removeTag = (tagName) => {
+        setTagList((prevTags) => prevTags.filter((tag) => tag !== tagName));
+    };
 
     const handleCancelClick = () => {
         setIsModalOpen(false);
@@ -18,7 +28,10 @@ const NewPostModal = ({ addNewPost }) => {
         const postTitle = titleInputRef.current.value;
         const postContent = textAreaInput.current.value;
         const isFavorite = false;
-        const postLinks = {};
+        const postLinks = {
+            links: [],
+            tags: tagList,
+        };
 
         const { data, error } = await supabase
             .from("Posts")
@@ -74,6 +87,29 @@ const NewPostModal = ({ addNewPost }) => {
                             placeholder="Type here..."
                             ref={textAreaInput}
                         ></textarea>
+                        <div className={classes.allTags}>
+                            <Tag tagName="ai" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="css" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="correction" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="database" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="example" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="fix" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="github" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="goal" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="idea" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="important" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="improvement" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="javascript" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="problem" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="python" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="question" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="react" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="research" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="solution" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="supabase" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="testing" isMono={true} addTag={addTag} removeTag={removeTag} />
+                            <Tag tagName="vscode" isMono={true} addTag={addTag} removeTag={removeTag} />
+                        </div>
                     </form>
                 </div>
             )}
