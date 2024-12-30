@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { supabase } from "../clients/supabaseClient";
 import Tag from "../elements/Tag";
@@ -58,6 +58,12 @@ const NewPostModal = ({ addNewPost }) => {
 
         setIsModalOpen(false);
     };
+
+    useEffect(() => {
+        if (isModalOpen && titleInputRef.current) {
+            titleInputRef.current.focus();
+        }
+    }, [isModalOpen]);
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../clients/supabaseClient";
 
@@ -10,6 +10,8 @@ const LoginCard = () => {
     const [password, setPassword] = useState("");
     const [pageError, setPageError] = useState(null);
     const navigate = useNavigate();
+
+    const emailInputRef = useRef();
 
     const handleCancelClick = () => {
         setIsModalOpen(false);
@@ -49,6 +51,12 @@ const LoginCard = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (isModalOpen && emailInputRef.current) {
+            emailInputRef.current.focus();
+        }
+    }, [isModalOpen]);
+
     return (
         <>
             {/* Conditional logic to control overlay. Right side wont eval if left side false */}
@@ -70,6 +78,7 @@ const LoginCard = () => {
                                     className={classes.formInput}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    ref={emailInputRef}
                                     placeholder=""
                                     required
                                 />

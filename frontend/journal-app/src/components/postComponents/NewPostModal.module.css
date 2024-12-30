@@ -57,17 +57,12 @@
     width: 70%;
 
     background-color: rgb(0, 0, 0, 0);
-    color: var(--tertiary-color);
     font-family: "poppins", "sans-serif";
     font-size: 1.16rem;
     font-weight: 300;
     outline: none;
     border: none;
     border-bottom: 1px solid var(--tertiary-color);
-}
-
-.titleInput::placeholder {
-    color: rgb(170, 170, 170);
 }
 
 .newHeaderTools {
@@ -89,6 +84,13 @@
     resize: none;
 }
 
+.allTags {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
 button {
     background-color: var(--secondary-color);
     color: var(--tertiary-color);
@@ -103,11 +105,4 @@ button {
     height: 1.5rem;
     margin-left: 0.5rem;
     padding: 0rem 1rem;
-}
-
-.allTags {
-    width: 100%;
-
-    display: flex;
-    flex-wrap: wrap;
 }
