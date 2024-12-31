@@ -13,6 +13,26 @@ const PostCard = ({ postId, title, date, initialContent, removePost, postTagsLis
     const [postTags, setPostTags] = useState(postTagsList);
 
     useEffect(() => {
+        const textarea = document.querySelector(`.${classes.textarea}`);
+        if (textarea) {
+            resizeTextarea(textarea);
+        }
+    
+        const handleResize = () => {
+            const textarea = document.querySelector(`.${classes.textarea}`);
+            if (textarea) {
+                resizeTextarea(textarea);
+            }
+        };
+    
+        window.addEventListener("resize", handleResize);
+    
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, [content])
+
+    useEffect(() => {
         const checkUser = async () => {
             const {
                 data: { user },
