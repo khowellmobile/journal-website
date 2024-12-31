@@ -12,6 +12,12 @@
     align-items: center;
 }
 
+@media (max-width: 500px) {
+    .tag {
+        padding: 1rem 0.75rem;
+    }
+}
+
 .tag p {
     font-size: 0.8rem;
     font-weight: 500;
