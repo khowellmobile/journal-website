@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import Tag from "../elements/Tag";
 import DeletePostModal from "./DeletePostModal";
@@ -12,25 +12,33 @@ const PostCard = ({ postId, title, date, initialContent, removePost, postTagsLis
     const [content, setContent] = useState(initialContent);
     const [postTags, setPostTags] = useState(postTagsList);
 
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            resizeTextarea(textareaRef.current);
+        }
+    }, [initialContent]);
+
     useEffect(() => {
         const textarea = document.querySelector(`.${classes.textarea}`);
         if (textarea) {
             resizeTextarea(textarea);
         }
-    
+
         const handleResize = () => {
             const textarea = document.querySelector(`.${classes.textarea}`);
             if (textarea) {
                 resizeTextarea(textarea);
             }
         };
-    
+
         window.addEventListener("resize", handleResize);
-    
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, [content])
+    }, [content]);
 
     useEffect(() => {
         const checkUser = async () => {
@@ -92,6 +100,7 @@ const PostCard = ({ postId, title, date, initialContent, removePost, postTagsLis
             <div className={classes.separatorH}></div>
             <div className={classes.content}>
                 <textarea
+                    ref={textareaRef}
                     readOnly={!isEditing}
                     className={classes.textarea}
                     placeholder="Type here..."
