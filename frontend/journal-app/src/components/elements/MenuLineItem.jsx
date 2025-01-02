@@ -1,9 +1,14 @@
-import classes from "./MenuLineItem.module.css"
+import classes from "./MenuLineItem.module.css";
 
-const MenuLineItem = () => {
+import logo from "../../assets/react.svg";
+
+const MenuLineItem = ({ itemName, navPath = null }) => {
     return (
-        <p>LineItem</p>
-    )
-}
+        <div className={classes.mainContainer}>
+            <img src={logo} alt="Orange triangle" />
+            <p>{itemName}</p>
+        </div>
+    );
+};
 
-export default LineItem;
+export default MenuLineItem;
