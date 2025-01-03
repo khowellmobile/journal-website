@@ -1,11 +1,13 @@
-import classes from "./Features.module.css"
+import classes from "./Features.module.css";
+
+import PriorityTasks from "../elements/PriorityTasks";
 
 const Features = () => {
     return (
-        <>
-            <h1></h1>
-        </>
-    )
-}
+        <div className={classes.featureContainer}>
+            <PriorityTasks />
+        </div>
+    );
+};
 
 export default Features;

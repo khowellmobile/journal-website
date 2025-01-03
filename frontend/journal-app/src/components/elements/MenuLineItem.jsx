@@ -1,12 +1,14 @@
 import classes from "./MenuLineItem.module.css";
 
-import logo from "../../assets/react.svg";
-
-const MenuLineItem = ({ itemName, navPath = null }) => {
+const MenuLineItem = ({ itemName, navPath = null, logo = null }) => {
     return (
         <div className={classes.mainContainer}>
-            <img src={logo} alt="Orange triangle" />
-            <p>{itemName}</p>
+            <div className={classes.logoContainer}>
+                <div className={classes.svgPH}></div>
+            </div>
+            <div className={classes.nameContainer}>
+                <p>{itemName}</p>
+            </div>
         </div>
     );
 };

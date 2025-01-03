@@ -1,0 +1,33 @@
+.taskItemContainer {
+    width: 100%;
+    height: 3rem;
+
+    border-bottom: 1px solid rgba(128, 128, 128, 0.301);
+
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 2fr 0.5fr 0.5fr 2fr 1fr;
+}
+
+.taskItemContainer > div:not(:nth-child(2)) {
+    padding-left: 0.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.taskItemContainer > div > p {
+    font-size: 0.9rem;
+}
+
+.clientInfo {
+    padding-left: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.clientInfo > p:nth-child(2) {
+    color: grey;
+    font-size: 0.8rem;
+}
