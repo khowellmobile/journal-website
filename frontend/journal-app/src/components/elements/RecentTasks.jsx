@@ -16,6 +16,11 @@ const RecentTasks = () => {
                     .select(
                         `
                         id,
+                        created_at,
+                        priority,
+                        state,
+                        notes,
+                        title,
                         client_id,
                         date_completed,
                         description,
@@ -45,6 +50,33 @@ const RecentTasks = () => {
         console.log(loadedTasks);
     }, [loadedTasks]);
 
+    const handleUpdateTask = async (updatedTask) => {
+        const taskIndex = loadedTasks.findIndex((task) => task.id === updatedTask.id);
+
+        if (taskIndex !== -1) {
+            const updatedTasks = [...loadedTasks];
+            updatedTasks[taskIndex] = updatedTask;
+            setLoadedTasks(updatedTasks);
+
+            try {
+                const { data, error } = await supabase
+                    .from("Tasks")
+                    .update({
+                        description: updatedTask.description,
+                        state: updatedTask.state,
+                        notes: updatedTask.notes,
+                    })
+                    .eq("id", updatedTask.id);
+
+                if (error) {
+                    console.error("Error updating task:", error);
+                }
+            } catch (error) {
+                console.error("Error updating task in the database:", error);
+            }
+        }
+    };
+
     return (
         <div className={classes.mainContainer}>
             <section className={classes.header}>
@@ -65,7 +97,7 @@ const RecentTasks = () => {
             <section className={classes.items}>
                 {loadedTasks.length > 0 ? (
                     loadedTasks.map((task) => {
-                        return <CompletedTaskItem key={task.id} task={task} />;
+                        return <CompletedTaskItem key={task.id} task={task} handleUpdateTask={handleUpdateTask}/>;
                     })
                 ) : (
                     <p>No Tasks Available</p>

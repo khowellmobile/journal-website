@@ -1,12 +1,19 @@
 import { useState, useRef } from "react";
+
+import { supabase } from "../clients/supabaseClient";
+
 import classes from "./TaskDetails.module.css";
 
 const TaskDetails = ({ task, handleCloseModal }) => {
-    const [taskState, setTaskState] = useState("Ready for Review");
+    const { id, created_at, priority, state, notes, title, client_id, date_completed, description, Clients } = task;
+
+    const { client_name, contact_first_name, contact_last_name } = Clients;
+
+    const [taskState, setTaskState] = useState(state);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isAddingNote, setIsAddingNote] = useState(false);
-    const [descriptionContent, setDescriptionContent] = useState("This is a test description");
+    const [descriptionContent, setDescriptionContent] = useState(description);
     const [newNoteContent, setNewNoteContent] = useState(null);
 
     const descriptionRef = useRef(null);
@@ -29,27 +36,40 @@ const TaskDetails = ({ task, handleCloseModal }) => {
         setIsAddingNote(false);
     };
 
+    const handleCloseDetails = () => {
+        const updatedTask = { 
+            ...task, 
+            state: taskState, 
+            description: descriptionContent,
+            notes: notes,
+        };
+
+        handleCloseModal(updatedTask);
+    }
+
     return (
         <div className={classes.modalOverlay}>
             <div className={classes.detailContainer}>
                 <section className={classes.header}>
                     <div className={classes.priority}>
-                        <h1>1</h1>
+                        <h1>{priority}</h1>
                     </div>
                     <div className={classes.headerInfo}>
-                        <h2>Task Title</h2>
+                        <h2>{title}</h2>
                         <p>Created at: January 14, 2025 at 8:30 AM</p>
                     </div>
                     <div className={classes.headerTools}>
-                        <button onClick={handleCloseModal}>Close</button>
+                        <button onClick={handleCloseDetails}>Close</button>
                     </div>
                 </section>
                 <div className={classes.seperatorH}></div>
                 <section className={classes.body}>
                     <div className={classes.bodyHeader}>
                         <div className={classes.clientInfo}>
-                            <p>Howell Associates</p>
-                            <p>Kent Howell</p>
+                            <p>{client_name}</p>
+                            <p>
+                                {contact_first_name} {contact_last_name}
+                            </p>
                         </div>
                         <div className={classes.taskState}>
                             <div>

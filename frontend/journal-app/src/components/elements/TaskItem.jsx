@@ -39,14 +39,15 @@ const PriorityTaskItem = ({ task }) => {
     );
 };
 
-const CompletedTaskItem = ({ task }) => {
+const CompletedTaskItem = ({ task, handleUpdateTask }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { date_completed, description, Clients } = task;
     const { client_name, contact_first_name, contact_last_name } = Clients;
 
-    const handleCloseModal = () => {
+    const handleCloseModal = (updatedTask) => {
         setIsModalOpen(false);
+        handleUpdateTask(updatedTask);
     };
 
     const handleClick = () => {
@@ -55,7 +56,7 @@ const CompletedTaskItem = ({ task }) => {
 
     return (
         <>
-            {isModalOpen && <TaskDetails task={task} handleCloseModal={handleCloseModal} />}
+            {isModalOpen && <TaskDetails task={task} handleCloseModal={handleCloseModal}/>}
 
             <div onClick={handleClick} className={`${classes.taskItemContainer} ${classes.completedTaskGrid}`}>
                 <div className={classes.clientInfo}>
