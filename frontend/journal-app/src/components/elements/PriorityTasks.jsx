@@ -30,6 +30,7 @@ const PriorityTasks = () => {
                     )
                     `
                     )
+                    .eq("is_completed", false)
                     .order("priority", { ascending: true });
 
                 if (error) {

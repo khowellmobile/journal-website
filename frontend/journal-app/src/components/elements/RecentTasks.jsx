@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../clients/supabaseClient";
 
 import classes from "./RecentTasks.module.css";
+import { CompletedTaskItem } from "./TaskItem";
 
 const RecentTasks = () => {
     const [loadedTasks, setLoadedTasks] = useState([]);
@@ -16,6 +17,8 @@ const RecentTasks = () => {
                         `
                         id,
                         client_id,
+                        date_completed,
+                        description,
                         Clients (
                             client_name,
                             contact_first_name,
@@ -23,6 +26,7 @@ const RecentTasks = () => {
                         )
                         `
                     )
+                    .eq("is_completed", true)
                     .order("priority", { ascending: true });
 
                 if (error) {
@@ -58,7 +62,15 @@ const RecentTasks = () => {
                     <p>Completed</p>
                 </div>
             </section>
-            <section className={classes.items}></section>
+            <section className={classes.items}>
+                {loadedTasks.length > 0 ? (
+                    loadedTasks.map((task) => {
+                        return <CompletedTaskItem key={task.id} task={task} />;
+                    })
+                ) : (
+                    <p>No Tasks Available</p>
+                )}
+            </section>
         </div>
     );
 };

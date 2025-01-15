@@ -1,3 +1,211 @@
+.modalOverlay {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.detailContainer {
+    width: 50rem;
+    height: 30rem;
+    padding: 1rem;
+
+    background-color: white;
+    border-radius: 0.25rem;
+
+    z-index: 1001;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.detailContainer .header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.detailContainer .header .priority {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+
+    background-color: darkorange;
+    color: white;
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detailContainer .header .headerInfo {
+    width: calc(55% - 4rem);
+}
+
+.detailContainer .header .headerInfo h2 {
+    font-weight: 500;
+}
+
+.detailContainer .header .headerInfo p {
+    color: grey;
+    font-size: 0.8rem;
+}
+
+.detailContainer .header .headerTools {
+    width: 45%;
+
+    display: flex;
+    justify-content: end;
+}
+
+.detailContainer .header .headerTools button {
+    padding: 0.5rem 0.5rem;
+    margin-left: 0.5rem;
+
+    background-color: darkorange;
+    color: white;
+    border-radius: 0.25rem;
+    border: none;
+    outline: none;
+    font-family: "poppins";
+    cursor: pointer;
+}
+
+.detailContainer .clientInfo {
+    height: 2.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.clientInfo > p:nth-child(2) {
+    color: grey;
+    font-size: 0.8rem;
+}
+
+.bodyHeader {
+    margin-bottom: 0.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seperatorV {
+    height: 100%;
+    width: 1px;
+    margin: 0rem 0.25rem;
+
+    background-color: white;
+}
+
+.taskState {
+    width: 10rem;
+    height: 2rem;
+
+    background-color: darkorange;
+    color: white;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.taskState > div:nth-child(1) {
+    width: 80%;
+    height: 100%;
+    padding-left: 0.25rem;
+
+    border-radius: 0.25rem 0 0 0.25rem;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.taskState > div:nth-child(2) {
+    width: 20%;
+    height: 100%;
+
+    background-color: darkorange;
+    border-left: 1px solid white;
+    border-radius: 0 0.25rem 0.25rem 0;
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropDown {
+    position: relative;
+}
+
+.dropDownContent {
+    height: 8rem;
+    width: 10rem;
+
+    background-color: white;
+    color: black;
+    border-radius: 0.25rem;
+    user-select: none;
+    outline: 1px solid rgb(216, 216, 216);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: absolute;
+    top: 1.25rem;
+    right: 20%;
+}
+
+.dropDownContent > span {
+    height: 2rem;
+    padding: 0rem 0.25rem;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+}
+
+.dropDownContent > span:not(:nth-child(4)) {
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.dropDownContent > span:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.taskDescription {
+    width: 100%;
+    height: 10rem;
+
+    border-radius: 0.25rem;
+    outline: 1px solid rgb(216, 216, 216);
+}
+
+.seperatorH {
+    width: 100%;
+    height: 1px;
+    margin: 0.5rem 0rem;
+
+    background-color: rgb(216, 216, 216);
+}
+
 .taskItemContainer {
     width: 100%;
     height: 3rem;
@@ -5,17 +213,7 @@
     border-bottom: 1px solid rgba(128, 128, 128, 0.301);
     cursor: pointer;
 
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 2.25fr 0.5fr 0.5fr 1.5fr 1fr;
-
     transition: all ease 0.5s;
-}
-
-.taskItemContainer > div:not(:nth-child(2)) {
-    padding-left: 0.5rem;
-
-    display: flex;
-    align-items: center;
 }
 
 .taskItemContainer > div > p {
@@ -26,15 +224,34 @@
     background-color: rgba(94, 94, 199, 0.25);
 }
 
-.clientInfo {
+.priorityTaskGrid {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 2.25fr 0.5fr 0.5fr 1.5fr 1fr;
+}
+
+.priorityTaskGrid > div:not(:nth-child(2)) {
+    padding-left: 0.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.completedTaskGrid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 0.5fr;
+}
+
+.completedTaskGrid > div:not(:nth-child(1)) {
+    padding-left: 0.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.taskItemContainer .clientInfo {
     padding-left: 0.5rem;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.clientInfo > p:nth-child(2) {
-    color: grey;
-    font-size: 0.8rem;
 }
