@@ -1,65 +1,7 @@
 import { useState } from "react";
 import classes from "./TaskItem.module.css";
 
-const TaskDetails = ({ task, handleCloseModal }) => {
-    const [taskState, setTaskState] = useState("Ready for Review");
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const handleDropDownClick = (value) => {
-        setTaskState(value);
-        setIsExpanded(false);
-    };
-
-    return (
-        <div className={classes.modalOverlay}>
-            <div className={classes.detailContainer}>
-                <section className={classes.header}>
-                    <div className={classes.priority}>
-                        <h1>1</h1>
-                    </div>
-                    <div className={classes.headerInfo}>
-                        <h2>Task Title</h2>
-                        <p>Created at: January 14, 2025 at 8:30 AM</p>
-                    </div>
-                    <div className={classes.headerTools}>
-                        <button>Complete</button>
-                        <button onClick={handleCloseModal}>Close</button>
-                    </div>
-                </section>
-                <div className={classes.seperatorH}></div>
-                <section className={classes.body}>
-                    <div className={classes.bodyHeader}>
-                        <div className={classes.clientInfo}>
-                            <p>Howell Associates</p>
-                            <p>Kent Howell</p>
-                        </div>
-                        <div className={classes.taskState}>
-                            <div>
-                                <p>{taskState}</p>
-                            </div>
-                            <div onClick={() => setIsExpanded((prevIsExpanded) => !prevIsExpanded)}>
-                                <p>{isExpanded ? "△" : "▽"}</p>
-                            </div>
-                            {isExpanded && (
-                                <div className={classes.dropDown}>
-                                    <div className={classes.dropDownContent}>
-                                        <span onClick={() => handleDropDownClick("Waiting")}>Waiting</span>
-                                        <span onClick={() => handleDropDownClick("In Progress")}>In Progress</span>
-                                        <span onClick={() => handleDropDownClick("Ready for Review")}>
-                                            Ready for Review
-                                        </span>
-                                        <span onClick={() => handleDropDownClick("Completed")}>Completed</span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className={classes.taskDescription}></div>
-                </section>
-            </div>
-        </div>
-    );
-};
+import TaskDetails from "./TaskDetails";
 
 const PriorityTaskItem = ({ task }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
