@@ -1,11 +1,10 @@
 import { useState, useRef } from "react";
 
-import { supabase } from "../clients/supabaseClient";
-
 import classes from "./TaskDetails.module.css";
+import Note from "./Note";
 
 const TaskDetails = ({ task, handleCloseModal }) => {
-    const { id, created_at, priority, state, notes, title, client_id, date_completed, description, Clients } = task;
+    const { id, created_at, priority, state, notes, title, description, task_lead, Clients } = task;
 
     const { client_name, contact_first_name, contact_last_name } = Clients;
 
@@ -15,9 +14,12 @@ const TaskDetails = ({ task, handleCloseModal }) => {
     const [isAddingNote, setIsAddingNote] = useState(false);
     const [descriptionContent, setDescriptionContent] = useState(description);
     const [newNoteContent, setNewNoteContent] = useState(null);
+    const [currentNotes, setCurrentNotes] = useState(notes || []);
 
     const descriptionRef = useRef(null);
     const noteRef = useRef(null);
+
+    console.log(currentNotes);
 
     const handleDropDownClick = (value) => {
         setTaskState(value);
@@ -33,19 +35,33 @@ const TaskDetails = ({ task, handleCloseModal }) => {
     };
 
     const handleNewNoteSave = () => {
-        setIsAddingNote(false);
+        if (newNoteContent && newNoteContent.trim() !== "") {
+            const newNote = {
+                user: "KCH",
+                text: newNoteContent.trim(),
+                created_at: new Date().toISOString(),
+            };
+
+            setCurrentNotes((prevNotes) => [...prevNotes, newNote]);
+            setNewNoteContent("");
+            setIsAddingNote(false);
+        }
+    };
+
+    const handleNoteDelete = (key) => {
+        setCurrentNotes((prevNotes) => prevNotes.filter((note) => note.created_at !== key));
     };
 
     const handleCloseDetails = () => {
-        const updatedTask = { 
-            ...task, 
-            state: taskState, 
+        const updatedTask = {
+            ...task,
+            state: taskState,
             description: descriptionContent,
-            notes: notes,
+            notes: currentNotes,
         };
 
         handleCloseModal(updatedTask);
-    }
+    };
 
     return (
         <div className={classes.modalOverlay}>
@@ -55,7 +71,11 @@ const TaskDetails = ({ task, handleCloseModal }) => {
                         <h1>{priority}</h1>
                     </div>
                     <div className={classes.headerInfo}>
-                        <h2>{title}</h2>
+                        <span>
+                            <h2>{title}</h2>
+                            <div className={classes.seperatorV}></div>
+                            <h3>Lead: {task_lead}</h3>
+                        </span>
                         <p>Created at: January 14, 2025 at 8:30 AM</p>
                     </div>
                     <div className={classes.headerTools}>
@@ -113,7 +133,19 @@ const TaskDetails = ({ task, handleCloseModal }) => {
                             <p>Notes:</p>
                             <span onClick={() => setIsAddingNote(true)}>New Note</span>
                         </div>
-                        <div className={classes.noteListing}></div>
+                        <div className={classes.noteListing}>
+                            {currentNotes.map((note) => {
+                                return (
+                                    <Note
+                                        key={note.created_at}
+                                        user={note.user}
+                                        text={note.text}
+                                        date={note.created_at}
+                                        handleNoteDelete={handleNoteDelete}
+                                    />
+                                );
+                            })}
+                        </div>
                         {isAddingNote && (
                             <div className={classes.newNoteBox}>
                                 <span>

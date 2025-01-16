@@ -1,0 +1,39 @@
+.noteContainer {
+    width: 100%;
+    margin-bottom: 0.25rem;
+
+    border-bottom: 1px solid grey;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.noteText {
+    font-size: 0.9rem;
+
+    align-self: flex-start;
+}
+
+.noteInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.noteInfo p {
+    color: grey;
+    font-size: 0.7rem;
+
+    align-self: flex-end;
+}
+
+.noteInfo p:nth-child(1) {
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.noteInfo p:nth-child(1):hover {
+    color: rgb(230, 0, 0);
+}

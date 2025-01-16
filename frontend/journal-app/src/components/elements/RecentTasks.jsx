@@ -22,6 +22,7 @@ const RecentTasks = () => {
                         notes,
                         title,
                         client_id,
+                        task_lead,
                         date_completed,
                         description,
                         Clients (
@@ -54,8 +55,16 @@ const RecentTasks = () => {
         const taskIndex = loadedTasks.findIndex((task) => task.id === updatedTask.id);
 
         if (taskIndex !== -1) {
-            const updatedTasks = [...loadedTasks];
-            updatedTasks[taskIndex] = updatedTask;
+            // Only updates task in loadedTasks if it still is completed
+            const updatedTasks =
+                updatedTask.state !== "Completed"
+                    ? loadedTasks.filter((task) => task.id !== updatedTask.id)
+                    : [...loadedTasks];
+
+            if (updatedTask.state === "Completed") {
+                updatedTasks[taskIndex] = updatedTask;
+            }
+
             setLoadedTasks(updatedTasks);
 
             try {
@@ -65,6 +74,7 @@ const RecentTasks = () => {
                         description: updatedTask.description,
                         state: updatedTask.state,
                         notes: updatedTask.notes,
+                        is_completed: updatedTask.state == "Completed" ? true : false,
                     })
                     .eq("id", updatedTask.id);
 
@@ -97,7 +107,7 @@ const RecentTasks = () => {
             <section className={classes.items}>
                 {loadedTasks.length > 0 ? (
                     loadedTasks.map((task) => {
-                        return <CompletedTaskItem key={task.id} task={task} handleUpdateTask={handleUpdateTask}/>;
+                        return <CompletedTaskItem key={task.id} task={task} handleUpdateTask={handleUpdateTask} />;
                     })
                 ) : (
                     <p>No Tasks Available</p>

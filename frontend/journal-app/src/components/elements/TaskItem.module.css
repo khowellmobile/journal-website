@@ -23,10 +23,10 @@
 
 .priorityTaskGrid {
     display: grid;
-    grid-template-columns: 0.5fr 2fr 2.25fr 0.5fr 0.5fr 1.5fr 1fr;
+    grid-template-columns: 0.5fr 1.4fr 1.8fr 2.3fr 0.5fr 1.25fr;
 }
 
-.priorityTaskGrid > div:not(:nth-child(2)) {
+.priorityTaskGrid > div:not(:nth-child(3)) {
     padding-left: 0.5rem;
 
     display: flex;

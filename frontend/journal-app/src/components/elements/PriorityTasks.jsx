@@ -16,17 +16,19 @@ const PriorityTasks = () => {
                     .select(
                         `
                     id,
+                    created_at,
                     priority,
-                    client_id,
                     state,
-                    info_needed,
-                    last_contacted,
+                    notes,
+                    title,
+                    client_id,
+                    task_lead,
+                    description,
                     Clients (
                         client_name,
                         contact_first_name,
                         contact_last_name,
-                        contact_email,
-                        client_lead
+                        contact_email
                     )
                     `
                     )
@@ -45,9 +47,41 @@ const PriorityTasks = () => {
         fetchTasks();
     }, []);
 
-    useEffect(() => {
-        console.log(loadedTasks);
-    }, [loadedTasks]);
+    const handleUpdateTask = async (updatedTask) => {
+        const taskIndex = loadedTasks.findIndex((task) => task.id === updatedTask.id);
+
+        if (taskIndex !== -1) {
+            // Only updates task in loadedTasks if it still is completed
+            const updatedTasks =
+                updatedTask.state == "Completed"
+                    ? loadedTasks.filter((task) => task.id !== updatedTask.id)
+                    : [...loadedTasks];
+
+            if (updatedTask.state !== "Completed") {
+                updatedTasks[taskIndex] = updatedTask;
+            }
+
+            setLoadedTasks(updatedTasks);
+
+            try {
+                const { data, error } = await supabase
+                    .from("Tasks")
+                    .update({
+                        description: updatedTask.description,
+                        state: updatedTask.state,
+                        notes: updatedTask.notes,
+                        is_completed: updatedTask.state == "Completed" ? true : false,
+                    })
+                    .eq("id", updatedTask.id);
+
+                if (error) {
+                    console.error("Error updating task:", error);
+                }
+            } catch (error) {
+                console.error("Error updating task in the database:", error);
+            }
+        }
+    };
 
     return (
         <div className={classes.mainContainer}>
@@ -58,6 +92,9 @@ const PriorityTasks = () => {
             <section className={classes.tasksColumnNames}>
                 <div>
                     <p>Priority</p>
+                </div>
+                <div>
+                    <p>Title</p>
                 </div>
                 <div>
                     <p>Client</p>
@@ -71,17 +108,11 @@ const PriorityTasks = () => {
                 <div>
                     <p>Stage</p>
                 </div>
-                <div>
-                    <p>Needed</p>
-                </div>
-                <div>
-                    <p>Contacted</p>
-                </div>
             </section>
             <section className={classes.tasksItems}>
                 {loadedTasks.length > 0 ? (
                     loadedTasks.map((task) => {
-                        return <PriorityTaskItem key={task.id} task={task} />;
+                        return <PriorityTaskItem key={task.id} task={task} handleUpdateTask={handleUpdateTask}/>;
                     })
                 ) : (
                     <p>No Tasks Available</p>
