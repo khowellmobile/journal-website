@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import classes from "./PriorityTasks.module.css";
-import TaskItem from "./TaskItem";
+import { PriorityTaskItem } from "./TaskItem";
 
 import { supabase } from "../clients/supabaseClient";
 
@@ -30,6 +30,7 @@ const PriorityTasks = () => {
                     )
                     `
                     )
+                    .eq("is_completed", false)
                     .order("priority", { ascending: true });
 
                 if (error) {
@@ -80,7 +81,7 @@ const PriorityTasks = () => {
             <section className={classes.tasksItems}>
                 {loadedTasks.length > 0 ? (
                     loadedTasks.map((task) => {
-                        return <TaskItem key={task.id} task={task} />;
+                        return <PriorityTaskItem key={task.id} task={task} />;
                     })
                 ) : (
                     <p>No Tasks Available</p>

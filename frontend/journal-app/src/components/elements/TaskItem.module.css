@@ -1,3 +1,8 @@
+.clientInfo > p:nth-child(2) {
+    color: grey;
+    font-size: 0.8rem;
+}
+
 .taskItemContainer {
     width: 100%;
     height: 3rem;
@@ -5,17 +10,7 @@
     border-bottom: 1px solid rgba(128, 128, 128, 0.301);
     cursor: pointer;
 
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 2.25fr 0.5fr 0.5fr 1.5fr 1fr;
-
     transition: all ease 0.5s;
-}
-
-.taskItemContainer > div:not(:nth-child(2)) {
-    padding-left: 0.5rem;
-
-    display: flex;
-    align-items: center;
 }
 
 .taskItemContainer > div > p {
@@ -26,15 +21,34 @@
     background-color: rgba(94, 94, 199, 0.25);
 }
 
-.clientInfo {
+.priorityTaskGrid {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 2.25fr 0.5fr 0.5fr 1.5fr 1fr;
+}
+
+.priorityTaskGrid > div:not(:nth-child(2)) {
+    padding-left: 0.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.completedTaskGrid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 0.5fr;
+}
+
+.completedTaskGrid > div:not(:nth-child(1)) {
+    padding-left: 0.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.taskItemContainer .clientInfo {
     padding-left: 0.5rem;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.clientInfo > p:nth-child(2) {
-    color: grey;
-    font-size: 0.8rem;
 }
