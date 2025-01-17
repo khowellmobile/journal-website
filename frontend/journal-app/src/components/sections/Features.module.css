@@ -1,6 +1,8 @@
 .featureContainer {
     padding: 1rem;
+}
 
+.featureContainer > div {
     display: flex;
     justify-content: space-between;
 }

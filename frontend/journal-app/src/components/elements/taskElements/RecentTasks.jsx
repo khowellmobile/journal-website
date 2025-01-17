@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-import classes from "./PriorityTasks.module.css";
-import { PriorityTaskItem } from "./TaskItem";
+import { supabase } from "../../clients/supabaseClient";
 
-import { supabase } from "../clients/supabaseClient";
+import classes from "./RecentTasks.module.css";
+import { CompletedTaskItem } from "./TaskItem";
 
-const PriorityTasks = () => {
+const RecentTasks = () => {
     const [loadedTasks, setLoadedTasks] = useState([]);
 
     useEffect(() => {
@@ -15,24 +15,24 @@ const PriorityTasks = () => {
                     .from("Tasks")
                     .select(
                         `
-                    id,
-                    created_at,
-                    priority,
-                    state,
-                    notes,
-                    title,
-                    client_id,
-                    task_lead,
-                    description,
-                    Clients (
-                        client_name,
-                        contact_first_name,
-                        contact_last_name,
-                        contact_email
+                        id,
+                        created_at,
+                        priority,
+                        state,
+                        notes,
+                        title,
+                        client_id,
+                        task_lead,
+                        date_completed,
+                        description,
+                        Clients (
+                            client_name,
+                            contact_first_name,
+                            contact_last_name
+                        )
+                        `
                     )
-                    `
-                    )
-                    .eq("is_completed", false)
+                    .eq("is_completed", true)
                     .order("priority", { ascending: true });
 
                 if (error) {
@@ -47,17 +47,21 @@ const PriorityTasks = () => {
         fetchTasks();
     }, []);
 
+    useEffect(() => {
+        console.log(loadedTasks);
+    }, [loadedTasks]);
+
     const handleUpdateTask = async (updatedTask) => {
         const taskIndex = loadedTasks.findIndex((task) => task.id === updatedTask.id);
 
         if (taskIndex !== -1) {
             // Only updates task in loadedTasks if it still is completed
             const updatedTasks =
-                updatedTask.state == "Completed"
+                updatedTask.state !== "Completed"
                     ? loadedTasks.filter((task) => task.id !== updatedTask.id)
                     : [...loadedTasks];
 
-            if (updatedTask.state !== "Completed") {
+            if (updatedTask.state === "Completed") {
                 updatedTasks[taskIndex] = updatedTask;
             }
 
@@ -85,34 +89,25 @@ const PriorityTasks = () => {
 
     return (
         <div className={classes.mainContainer}>
-            <section className={classes.tasksHeader}>
-                <h2>Priority Tasks</h2>
-                <div className={classes.tasksHeaderTools}></div>
+            <section className={classes.header}>
+                <h2>Recently Completed</h2>
+                <div className={classes.headerTools}></div>
             </section>
-            <section className={classes.tasksColumnNames}>
-                <div>
-                    <p>Priority</p>
-                </div>
-                <div>
-                    <p>Title</p>
-                </div>
+            <section className={classes.columnNames}>
                 <div>
                     <p>Client</p>
                 </div>
                 <div>
-                    <p>Email</p>
+                    <p>Description</p>
                 </div>
                 <div>
-                    <p>Lead</p>
-                </div>
-                <div>
-                    <p>Stage</p>
+                    <p>Completed</p>
                 </div>
             </section>
-            <section className={classes.tasksItems}>
+            <section className={classes.items}>
                 {loadedTasks.length > 0 ? (
                     loadedTasks.map((task) => {
-                        return <PriorityTaskItem key={task.id} task={task} handleUpdateTask={handleUpdateTask}/>;
+                        return <CompletedTaskItem key={task.id} task={task} handleUpdateTask={handleUpdateTask} />;
                     })
                 ) : (
                     <p>No Tasks Available</p>
@@ -122,4 +117,4 @@ const PriorityTasks = () => {
     );
 };
 
-export default PriorityTasks;
+export default RecentTasks;

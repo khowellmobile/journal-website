@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 
 import classes from "./TaskDetails.module.css";
-import Note from "./Note";
+import Note from "../Note";
 
 const TaskDetails = ({ task, handleCloseModal }) => {
     const { id, created_at, priority, state, notes, title, description, task_lead, Clients } = task;
