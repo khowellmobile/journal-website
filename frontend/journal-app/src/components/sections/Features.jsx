@@ -2,6 +2,7 @@ import classes from "./Features.module.css";
 
 import PriorityTasks from "../elements/taskElements/PriorityTasks";
 import RecentTasks from "../elements/taskElements/RecentTasks";
+import TaskGraph from "../elements/taskElements/taskGraph";
 
 const Features = () => {
     return (
@@ -11,7 +12,7 @@ const Features = () => {
                 <RecentTasks />
             </div>
             <div>
-
+                <TaskGraph />
             </div>
         </div>
     );
