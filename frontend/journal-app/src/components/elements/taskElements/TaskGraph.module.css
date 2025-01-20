@@ -1,4 +1,4 @@
-.graphContainer {
+.mainContainer {
     height: 100%;
     width: 50%;
 
@@ -6,21 +6,68 @@
     border-radius: 0.25rem;
 
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    height: 15%;
+
+    border-bottom: 1px solid rgba(128, 128, 128, 0.301);
+}
+
+.graphContainer {
+    padding: 0.5rem;
+
+    display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.yAxis {
+    width: 1rem;
+    height: 20rem;
+
+    box-sizing: border-box;
+
+    border-top: 2px solid grey;
+
+    display: grid;
+    grid-template-rows: repeat(10, 2rem);
+}
+
+.yAxisTickBox {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.yAxisTickBox > div {
+    width: 50%;
+    height: 2px;
+
+    background-color: grey;
+}
+
+.yAxisTickBox:last-child > div {
+    width: 100%;
+    position: relative;
+    bottom: 2px;
 }
 
 .graph {
     height: 20rem;
     width: 45rem;
-    outline: 1px solid red;
+
+    border-bottom: 2px solid grey;
+    border-left: 2px solid grey;
 }
 
 .bars {
     height: 100%;
 
     display: grid;
-    grid-template-columns: repeat(31, 1fr);
+    grid-template-columns: repeat(14, 1fr);
 }
 
 .barContainer {
@@ -33,14 +80,14 @@
 }
 
 .bar {
-    width: 0.5rem;
+    width: 1rem;
 
-    background-color: rgb(14, 148, 59);
+    background-color: rgb(37, 77, 207);
 }
 
 .bar2 {
-    width: 0.5rem;
-    margin-left: 2px;
+    width: 1rem;
+    /* margin-left: 2px; */
 
-    background-color: rgb(37, 77, 207);
+    background-color: rgb(14, 148, 59);
 }
