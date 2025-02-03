@@ -1,3 +1,14 @@
+:root {
+    --graph-width: 45rem; /* Change this for responsiveness */
+    --graph-height: 20rem; /* Change this for responsiveness */
+
+    --graph-xAxisRange: 14;
+    --graph-yAxisRange: 10;
+
+    --graph-xAxisPartition-width: calc(var(--graph-width) / var(--graph-xAxisRange));
+    --graph-yAxisPartition-height: calc(var(--graph-height) / var(--graph-yAxisRange));
+}
+
 .mainContainer {
     height: 100%;
     width: 50%;
@@ -11,9 +22,15 @@
 }
 
 .header {
-    height: 15%;
+    height: 10%;
 
     border-bottom: 1px solid rgba(128, 128, 128, 0.301);
+}
+
+.header h2 {
+    margin-left: 0.5rem;
+
+    font-weight: 500;
 }
 
 .graphContainer {
@@ -24,16 +41,57 @@
     align-items: center;
 }
 
+.xAxis {
+    width: var(--graph-width);
+    height: 1rem;
+
+    border-left: 2px solid grey;
+
+    display: grid;
+    grid-template-columns: repeat(var(--graph-xAxisRange), var(--graph-xAxisPartition-width));
+}
+
+.xAxisTickBox {
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+
+.xAxisTickBox > div {
+    width: 2px;
+    height: 50%;
+
+    background-color: grey;
+}
+
+.xAxisTickBox:last-child > div {
+    height: 100%;
+    position: relative;
+    right: 2px;
+}
+
+.test {
+    position: absolute;
+}
+
+.test > p {
+    font-size: 0.8rem;
+    position: relative;
+    bottom: 0.6rem;
+    right: 1.1rem;
+}
+
 .yAxis {
     width: 1rem;
-    height: 20rem;
-
-    box-sizing: border-box;
+    height: var(--graph-height);
 
     border-top: 2px solid grey;
 
     display: grid;
-    grid-template-rows: repeat(10, 2rem);
+    grid-template-rows: repeat(var(--graph-yAxisRange), var(--graph-yAxisPartition-height));
+
+    position: relative;
+    bottom: 0.5rem;
 }
 
 .yAxisTickBox {
@@ -49,6 +107,14 @@
     background-color: grey;
 }
 
+.yAxisTickBox > div > p {
+    font-size: 0.8rem;
+
+    position: relative;
+    bottom: 0.5rem;
+    right: 1rem;
+}
+
 .yAxisTickBox:last-child > div {
     width: 100%;
     position: relative;
@@ -56,8 +122,8 @@
 }
 
 .graph {
-    height: 20rem;
-    width: 45rem;
+    width: var(--graph-width);
+    height: var(--graph-height);
 
     border-bottom: 2px solid grey;
     border-left: 2px solid grey;
@@ -67,7 +133,7 @@
     height: 100%;
 
     display: grid;
-    grid-template-columns: repeat(14, 1fr);
+    grid-template-columns: repeat(var(--graph-xAxisRange), 1fr);
 }
 
 .barContainer {
@@ -80,14 +146,13 @@
 }
 
 .bar {
-    width: 1rem;
+    width: 33%;
 
     background-color: rgb(37, 77, 207);
 }
 
 .bar2 {
-    width: 1rem;
-    /* margin-left: 2px; */
+    width: 33%;
 
     background-color: rgb(14, 148, 59);
 }
